@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frags :: head('MyFotoAlbum')" >
+</head>
+<body>
+	
+	<div>
+		
+		<!-- Intestazione -->
+		<header th:replace="frags :: header()">
+			
+		</header>
+		
+		<!-- Sezione Foto -->
+		<main>
+						
+			<div class="container">
+				
+					<form>
+				
+						<input type="text" id="searchbar" name="q" placeholder="search..." th:value="${q}">
+						
+						<input type="submit">
+						
+					</form>
+					
+					<th:block th:replace="frags::button('/demigod/photos/create', 'create new photo')">
+						
+					</th:block>
+				
+				<div class="row">
+					
+					<h3 th:if="${photos.size()==0}">
+						Non hai nessuna foto
+					</h3>
+					
+				    <div class="col-2 gy-4" th:each="photo : ${photos}" th:object="${photo}" >
+						
+						<div class="card">
+							
+							<a th:href="@{'/photos/{id}'(id=${photo.id})}">
+							
+								<div class="card-img-top">
+			
+							        <img class="img-fluid" th:src="@{*{url}}" th:alt="*{title}">
+									
+								</div>
+								
+								<div class="card-body">
+									
+								 	<h2 th:text="*{title}"></h2>
+				        			<p >[[*{description}]]</p>
+				        			
+				        			
+								</div>
+								
+							</a>
+							
+						</div>
+				       
+				    </div>
+				    
+				</div>
+				
+			</div>
+			
+		</main>
+		
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="frags :: head(${title})" >
+	
+</head>
+<body data-bs-theme="dark">
+	
+	<th:block th:replace="frags :: header()"></th:block>
+	
+	
+	<div class="container">
+		
+		<div class="row justify-content-center">
+			
+			<div class="card col-6 text-center">
+				
+				<h3 class="card-title" >[[${title}]] 
+					
+				<span th:if="${photo.title}==null"> a New Photo </span>
+				
+				<span th:if="${photo.title}!=null">[[${photo.title}]]</span>
+				
+				</h3> 
+				
+				
+				<div ass="card-body row justify-content-center">
+					
+					<form class="col" th:object="${photo}"
+						  method="POST" >
+						
+						<div>
+					
+							<label class="form-label" for="title">
+								Title
+							</label>
+								
+							<input class="mb-2 form-control" type="text" id="title" name="title" placeholder="title" th:field="*{title}">
+							
+							<th:block th:replace="frags::errorDiv('title')"></th:block>
+							
+						</div>
+						
+						<div>
+			
+							<label class="form-label" for="description">
+								Description
+							</label>
+							
+							<textarea class="mb-2 form-control" id="description" name="description" placeholder="description" th:field="*{description}"></textarea>
+							
+						</div>
+						
+						<div>
+			
+							<label class="form-label" for="url">
+								Url
+							</label>
+							
+							<input class="mb-2 form-control" type="text" id="url" name="url" placeholder="url" th:field="*{url}">
+							
+						</div>
+						
+						<div>
+							
+							Visible:
+							
+							<div>
+								
+								<label class="form-label" th:for="visible-true" >
+									true
+								</label>
+								
+								<input type="radio"  id="visible-true" name="visible" th:value="true" th:checked="${photo.visible==true}" >
+												
+								<label class="form-label" th:for="visible-false" >
+									false
+								</label>
+								
+								<input type="radio"  id="visible-false" name="visible" th:value="false" th:checked="${photo.visible==false}">
+								
+							</div>
+						</div>
+						
+						<div th:each="category : ${categories}" th:object="${category}">
+			
+							<label class="form-label" th:for="'category-'+ *{id}" >
+								[[*{nome}]]
+							</label>
+							
+							<input type="checkbox" th:id="'category-'+ *{id}" th:value="*{id}" th:field="${photo.categories}">
+				
+							
+						</div>
+						
+						<div class=" mb-4 row justify-content-evenly">
+							
+							<input class="btn btn-success col-auto" type="submit" th:value="${title}">
+							
+							<input class="btn btn-warning col-auto" type="reset">
+							
+						</div>
+					
+					</form>
+					
+				</div>
+				
+			</div>
+			
+			<div class="text-center my-4" th:insert="frags :: button('/' , 'home')" ></div>
+			
+		</div>
+		
+		
+		
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		
+		<div th:fragment="head(title)">
+				
+				<meta charset="UTF-8">
+    			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    			<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+				<title>[[${title}]]</title>
+				
+		</div>
+		
+		<header class="mb-4" th:fragment="header()">
+					
+			<div class="container-fluid border-1">
+				
+				<div class="row">
+					
+					<div class="col-3 border">
+						<h1>
+							My Photo Gallery
+						</h1>
+					</div>
+					
+					<div class="col-6 border">
+						
+						<div class="row h-100 justify-content-start align-items-center">
+							
+						</div>
+				
+					</div>
+					
+					<div class="col-3 border">
+						
+						<div class="row h-100 justify-content-center align-items-center">
+							
+							<div class="col-auto" th:insert="frags::button('/logout', 'logout')"></div>
+						</div>
+				
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</header>
+	
+		<a
+			th:fragment="button(link , title)"
+			th:href="@{${link}}"
+			
+			class="btn btn-primary"
+			>
+			[[${title}]]
+		</a>
+		
+		<div  th:fragment="errorDiv(field)"
+		     th:if="${#fields.hasErrors(field)}">
+		     
+			<ul class="text-start col-12 alert alert-danger">
+			   <li  
+			   		th:each="err : ${#fields.errors(field)}">
+			   		[[${err}]]	
+			   	</li>
+			</ul>
+			
+		</div>
+	
+	</body>
+</html>

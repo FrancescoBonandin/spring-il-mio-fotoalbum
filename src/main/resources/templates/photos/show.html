@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frags :: head(${photo.title}+' details')" >
+</head>
+<body>
+	
+	<div >
+		<header th:replace="frags :: header()">
+			
+		</header>
+		
+	</div>
+
+
+<main>
+	
+	<div class="container text-center">
+		
+		<div class="row justify-content-center">
+						
+		    <div class="col-auto gy-4" >
+				
+				<div class="card px-3">
+					
+					<h1 class="card-title">[[${photo.title}]]</h1>
+					
+					<div class="card-img-top">
+	
+				        <img class="img-fluid" th:src="@{${photo.url}}" th:alt="${photo.title}">
+						
+					</div>
+					
+					<div class="card-body">
+						
+					 	<h2 th:text="${photo.title}"></h2>
+				        <p th:text="${photo.description}"></p>
+				        <p th:text="'Visibile: ' + ${photo.visible}"></p>
+				        <p >[[${photo.user.username}]]</p>
+				        <p th:if="${photo.categories.size()>0}" th:text="'Categorie: ' + ${photo.categories}"></p>
+				        <th:block th:replace="frags::button('/demigod/photos/edit/'+ ${photo.id}, 'edit photo')"></th:block>
+							
+						<form class="col-auto" method="POST" th:action="@{/demigod/photos/delete/{id}  (id=${photo.id})}">
+							
+							<input class="btn btn-danger" type="submit" value="delete">
+							
+						</form>
+						
+					</div>
+	
+				</div>
+		       
+		    </div>
+		    
+		    <div>
+			    <div class="text-center my-4" th:insert="frags :: button('/' , 'home')" ></div>
+			</div>
+		</div>	
+	</div>	
+</main>
+
+
+
+
+</body>
+</html>
