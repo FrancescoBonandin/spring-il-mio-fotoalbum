@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="frags :: head(${title})" >
+	
+</head>
+<body >
+	
+	<th:block th:replace="frags :: header()"></th:block>
+	
+	
+	<div class="container">
+		
+		<div class="row justify-content-center">
+			
+			<div class="card col-6 text-center">
+				
+				<h3 class="card-title" >[[${title}]] 
+					
+				<span th:if="${category.name}==null"> a New Category </span>
+				
+				<span th:if="${category.name}!=null">[[${category.name}]]</span>
+				
+				</h3> 
+				
+				
+				<div ass="card-body row justify-content-center">
+					
+					<form class="col" th:object="${category}"
+						  method="POST" >
+						
+						<div>
+					
+							<label class="form-label" for="name">
+								Name
+							</label>
+								
+							<input class="mb-2 form-control" type="text" id="name" name="name" placeholder="name" th:field="*{name}">
+							
+							<th:block th:replace="frags::errorDiv('name')"></th:block>
+							
+						</div>
+						
+						<div>
+			
+							<label class="form-label" for="description">
+								Description
+							</label>
+							
+							<textarea class="mb-2 form-control" id="description" name="description" placeholder="description" th:field="*{description}"></textarea>
+							
+						</div>
+						
+						
+						
+						<div class=" mb-4 row justify-content-evenly">
+							
+							<input class="btn btn-success col-auto" type="submit" th:value="${title}">
+							
+							<input class="btn btn-warning col-auto" type="reset">
+							
+						</div>
+					
+					</form>
+					
+				</div>
+				
+			</div>
+			
+			<div class="text-center my-4" th:insert="frags :: button('/' , 'home')" ></div>
+			
+		</div>
+		
+		
+		
+	</div>
+
+</body>
+
+</html>

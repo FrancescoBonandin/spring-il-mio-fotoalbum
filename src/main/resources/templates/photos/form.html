@@ -3,7 +3,7 @@
 <head th:replace="frags :: head(${title})" >
 	
 </head>
-<body data-bs-theme="dark">
+<body >
 	
 	<th:block th:replace="frags :: header()"></th:block>
 	
@@ -60,35 +60,44 @@
 							
 						</div>
 						
-						<div>
-							
-							Visible:
+						<div class="text-start">
 							
 							<div>
 								
-								<label class="form-label" th:for="visible-true" >
-									true
-								</label>
+								Visible:
 								
-								<input type="radio"  id="visible-true" name="visible" th:value="true" th:checked="${photo.visible==true}" >
-												
-								<label class="form-label" th:for="visible-false" >
-									false
-								</label>
-								
-								<input type="radio"  id="visible-false" name="visible" th:value="false" th:checked="${photo.visible==false}">
-								
+								<div class="ps-3">
+									
+									<label class="form-label" th:for="visible-true" >
+										true
+									</label>
+									
+									<input type="radio"  id="visible-true" name="visible" th:value="true" th:checked="${photo.visible==true}" >
+													
+									<label class="form-label" th:for="visible-false" >
+										false
+									</label>
+									
+									<input type="radio"  id="visible-false" name="visible" th:value="false" th:checked="${photo.visible==false}">
+									
+								</div>
 							</div>
-						</div>
-						
-						<div th:each="category : ${categories}" th:object="${category}">
-			
-							<label class="form-label" th:for="'category-'+ *{id}" >
-								[[*{nome}]]
-							</label>
 							
-							<input type="checkbox" th:id="'category-'+ *{id}" th:value="*{id}" th:field="${photo.categories}">
-				
+							<div>
+								
+								Categories:
+								
+								<div class="ps-3" th:each="category : ${categories}" th:object="${category}">
+					
+									<label class="form-label" th:for="'category-'+ *{id}" >
+										[[*{name}]]
+									</label>
+									
+									<input type="checkbox" th:id="'category-'+ *{id}" th:value="*{id}" th:field="${photo.categories}">
+						
+									
+								</div>
+							</div>
 							
 						</div>
 						

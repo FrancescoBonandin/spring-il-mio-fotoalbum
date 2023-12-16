@@ -20,6 +20,16 @@
 				
 						<input type="text" id="searchbar" name="q" placeholder="search..." th:value="${q}">
 						
+						<div class="ps-3" th:each="category : ${categories}" th:object="${category}">
+					
+							<label th:for="'category-'+ *{id}" >
+								[[*{name}]]
+							</label>
+							
+							<input type="checkbox" name="checked"  th:id="'category-'+ *{id}" th:value="*{id}" th:field="${checked}">
+							
+						</div>
+						
 						<input type="submit">
 						
 					</form>

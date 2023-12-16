@@ -43,7 +43,7 @@ public class Photo {
 	@JoinColumn(name="user_id", nullable=false)
 	private User user;
 	
-	@ManyToMany 
+	@ManyToMany (fetch = FetchType.EAGER)
 	private List<Category> categories;
 	
 	public Photo() {}

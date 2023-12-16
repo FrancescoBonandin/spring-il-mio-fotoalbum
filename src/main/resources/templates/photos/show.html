@@ -32,11 +32,19 @@
 					
 					<div class="card-body">
 						
-					 	<h2 th:text="${photo.title}"></h2>
-				        <p th:text="${photo.description}"></p>
+					 	<p th:text="'Titolo: '+ ${photo.title}"></p>
+				        <p th:text="'Descrizione: '+ ${photo.description}"></p>
 				        <p th:text="'Visibile: ' + ${photo.visible}"></p>
 				        <p >[[${photo.user.username}]]</p>
-				        <p th:if="${photo.categories.size()>0}" th:text="'Categorie: ' + ${photo.categories}"></p>
+				        <p th:if="${photo.categories.size()>0}" th:text="'Categorie: '">
+							
+							<div th:each="category : ${photo.categories}" th:object="${category}">
+								[[*{name}]]
+								
+								<span th:if=" ${photo.categories.size()!=photo.categories.indexOf(category)+1}">, </span>
+							</div>
+							
+						</p>
 				        <th:block th:replace="frags::button('/demigod/photos/edit/'+ ${photo.id}, 'edit photo')"></th:block>
 							
 						<form class="col-auto" method="POST" th:action="@{/demigod/photos/delete/{id}  (id=${photo.id})}">

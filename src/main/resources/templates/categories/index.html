@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frags :: head('MyFotoAlbum')" >
+</head>
+<body>
+	
+	<div>
+		
+		<!-- Intestazione -->
+		<header th:replace="frags :: header()">
+			
+		</header>
+		
+		<!-- Sezione Foto -->
+		<main>
+						
+			<div class="container">
+					
+					<th:block th:replace="frags::button('/demigod/categories/create', 'create new category')">
+						
+					</th:block>
+				
+				<div class="row">
+					
+					<h3 th:if="${categories.size()==0}">
+						Non esiste nessuna categoria
+					</h3>
+					
+					<ul>
+					
+					    <li class="row" th:each="category : ${categories}" th:object="${category}" >
+							
+							<div class="col-auto">
+								[[*{name}]]
+							</div>
+							
+				       		<div class="col-auto">
+								[[*{description}]]
+							</div>
+							
+					       	<div class="col-auto">
+								<div class="row">
+									
+									<div class="col-auto" th:insert="frags::button('/demigod/categories/edit/'+*{id}, 'edit')"></div>
+									
+									<form class="col-auto" method="POST" th:action="@{/demigod/categories/delete/{id}  (id=*{id})}">
+							
+										<input class="btn btn-danger" type="submit" value="delete">
+										
+									</form>
+									
+								</div>
+							</div>
+					    </li>
+						
+					</ul>
+				    
+				</div>
+				
+			</div>
+			
+		</main>
+		
+	</div>
+
+</body>
+</html>

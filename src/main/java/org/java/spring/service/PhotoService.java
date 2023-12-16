@@ -35,12 +35,12 @@ public class PhotoService {
 	
 	public List<Photo> findByUserIdAndTitleOrDescription(String q, Long id) {
 		
-		return photoRepo.findByTitleContainingOrDescriptionContainingAndUserId(q,q,id);
+		return photoRepo.findByTitleContainingAndUserIdOrDescriptionContainingAndUserId(q,id,q,id);
 	}
 	
-	public List<Photo> filterByCategories(Category...categories){
+	public List<Photo> filterByCategories(Long id, Category...categories){
 			
-		return photoRepo.findByCategoriesContaining(categories);
+		return photoRepo.findByUserIdAndCategoriesContaining(id, categories);
 	}
 	
 	public	List<Photo> findAllByUserId(Long id) {
@@ -48,9 +48,9 @@ public class PhotoService {
 		return photoRepo.findAllByUserId(id);
 	}
 	
-	public List<Photo> filterAndFind(String q, Category...categories){
+	public List<Photo> filterAndFind(String q, Long id, Category...categories){
 		
-		return photoRepo.findByTitleContainingOrDescriptionContainingAndCategoriesContaining(q, q, categories);
+		return photoRepo.findByTitleContainingAndUserIdOrDescriptionContainingAndUserIdAndCategoriesContaining(q,id,q,id, categories);
 	}
 	
 	@Transactional

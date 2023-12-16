@@ -51,16 +51,21 @@ public class PhotoController {
 //	}
 	@GetMapping
 	
-	public String routeIndex(Model model, @RequestParam(required=false) String q ) {
+	public String routeIndex(Model model, @RequestParam(required=false) String q, @RequestParam(required=false) Category[] checked ) {
 		
 		User user = getAuthUser();
-		
-		List<Photo> photos = q==null
+		List <Category> allCategories=categoryServ.findAll();
+		System.out.println("user: "+ user.getUsername());
+		List<Photo> photos = q == null && checked==null
 							? photoServ.findAllByUserId(user.getId())
-							: photoServ.findByUserIdAndTitleOrDescription(q, user.getId());
+							: (checked == null? photoServ.findByUserIdAndTitleOrDescription(q, user.getId())
+								:(q == null? photoServ.filterByCategories(user.getId(), checked)
+										: photoServ.filterAndFind(q, user.getId(), checked)));
 		
 		model.addAttribute("photos", photos);
+		model.addAttribute("categories", allCategories);
 		model.addAttribute("q", q == null ? "" : q);
+		model.addAttribute("checked", checked == null ? new Category[0]:checked);
 		
 		return "photos/index";
 		
@@ -104,7 +109,7 @@ public class PhotoController {
 			photo.setUser(user);
 
 			model.addAttribute("photo", photo);
-		
+			model.addAttribute("title", "Create");
 			return savePhoto(model,photo,bindingResult);
 		}
 	
@@ -128,7 +133,7 @@ public class PhotoController {
 			BindingResult bindingResult,
 			@PathVariable Long id) {
 			
-			
+			model.addAttribute("title", "Edit");
 			User user = getAuthUser();
 			Photo befEditPhoto=photoServ.findById(id);
 			if(befEditPhoto.getUser().equals(user)) {
