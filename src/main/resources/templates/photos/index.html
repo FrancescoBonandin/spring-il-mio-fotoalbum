@@ -16,21 +16,35 @@
 						
 			<div class="container">
 				
-					<form>
+					<form class="my-4">
 				
-						<input type="text" id="searchbar" name="q" placeholder="search..." th:value="${q}">
+						<input class=" form-control w-50 " type="text" id="searchbar" name="q" placeholder="search..." th:value="${q}">
 						
-						<div class="ps-3" th:each="category : ${categories}" th:object="${category}">
-					
-							<label th:for="'category-'+ *{id}" >
-								[[*{name}]]
-							</label>
-							
-							<input type="checkbox" name="checked"  th:id="'category-'+ *{id}" th:value="*{id}" th:field="${checked}">
-							
+						<div class="accordion w-25 my-2" id="accordionExample">
+							  <div class="accordion-item p-0">
+								    <h2 class="accordion-header p-0">
+								      	<button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								        	Categorie
+								     	</button>
+								    </h2>
+							    	<div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+								      	<div class="accordion-body">
+									        <div class="ps-3" th:each="category : ${categories}"  th:object="${category}">
+															
+												<label th:for="'category-'+ *{id}" >
+													[[*{name}]]
+												</label>
+												
+												<input type="checkbox" name="checked"  th:id="'category-'+ *{id}" th:value="*{id}" th:checked="${checked.contains(category)}" >
+													
+											</div> 
+										</div>	
+									</div>
+							  </div>
 						</div>
+
 						
-						<input type="submit">
+						<input class="btn btn-primary  " type="submit">
 						
 					</form>
 					

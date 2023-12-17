@@ -1,5 +1,7 @@
 package org.java.spring.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.java.spring.auth.db.service.UserService;
@@ -51,21 +53,39 @@ public class PhotoController {
 //	}
 	@GetMapping
 	
-	public String routeIndex(Model model, @RequestParam(required=false) String q, @RequestParam(required=false) Category[] checked ) {
+	public String routeIndex(Model model, @RequestParam(required=false) String q, @RequestParam(required=false) List<Long> checked ) {
 		
 		User user = getAuthUser();
 		List <Category> allCategories=categoryServ.findAll();
 		System.out.println("user: "+ user.getUsername());
+		
+		if(q!=null ) System.out.println("string :"+q);
+		
+		if(checked !=null)System.out.println(" Checked : "+ Arrays.asList(checked));
+		
+		List<Category> checkedCat = new ArrayList<>();
+		
+		
+		if(checked!=null) {
+			
+			for(Long id : checked) {
+				
+				checkedCat.add(categoryServ.findById(id));
+			}
+		}
+		
+		
+		
 		List<Photo> photos = q == null && checked==null
 							? photoServ.findAllByUserId(user.getId())
 							: (checked == null? photoServ.findByUserIdAndTitleOrDescription(q, user.getId())
-								:(q == null? photoServ.filterByCategories(user.getId(), checked)
-										: photoServ.filterAndFind(q, user.getId(), checked)));
+								:(q == null? photoServ.filterByCategories(user.getId(), checkedCat)
+										: photoServ.filterAndFind(q, user.getId(), checkedCat)));
 		
 		model.addAttribute("photos", photos);
 		model.addAttribute("categories", allCategories);
 		model.addAttribute("q", q == null ? "" : q);
-		model.addAttribute("checked", checked == null ? new Category[0]:checked);
+		model.addAttribute("checked", checked == null ? new ArrayList<Category>():checkedCat);
 		
 		return "photos/index";
 		

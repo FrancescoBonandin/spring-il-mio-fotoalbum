@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.java.spring.pojo.Message;
 import org.java.spring.pojo.Photo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,6 +43,9 @@ public class User implements UserDetails {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Photo> photos;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Message> messages;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles;

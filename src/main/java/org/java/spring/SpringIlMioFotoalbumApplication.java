@@ -6,8 +6,10 @@ import org.java.spring.auth.db.service.UserService;
 import org.java.spring.db.auth.pojo.Role;
 import org.java.spring.db.auth.pojo.User;
 import org.java.spring.pojo.Category;
+import org.java.spring.pojo.Message;
 import org.java.spring.pojo.Photo;
 import org.java.spring.service.CategoryService;
+import org.java.spring.service.MessageService;
 import org.java.spring.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,7 +30,10 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PhotoService photoServ;
-
+	
+	@Autowired
+	private MessageService messageServ;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIlMioFotoalbumApplication.class, args);
 	}
@@ -75,9 +80,19 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 				
 				photo.setCategories(c);
 				
+				photoServ.save(photo);
+				
 			}
+			
 		}
+		Message msg1= new Message("email@email.email"
+								, "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+								+ " Aenean at purus orci. Duis porttitor felis vitae"
+								+ " congue suscipit. Sed vitae."
+								, owner1);
 		
+		messageServ.save(msg1);
+				
 	}
 
 }

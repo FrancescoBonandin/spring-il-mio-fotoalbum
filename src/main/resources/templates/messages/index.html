@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frags :: head('MyFotoAlbum')" >
+</head>
+<body>
+	
+	<div>
+		
+		<!-- Intestazione -->
+		<header th:replace="frags :: header()">
+			
+		</header>
+		
+		<!-- Sezione Foto -->
+		<main>
+						
+			<div class="container">
+				
+					
+				
+				<div class="row justify-content-center">
+					
+					<h3 th:if="${messages.size()==0}">
+						Non hai nessun Messaggio
+					</h3>
+					
+				    <div class="col-10 gy-4"  >
+						
+						<ul >
+							<li th:each="message : ${messages}" th:object="${message}">
+								
+								<div class="row border">
+									
+								
+										<div class="col-auto">
+											<a th:href="@{'/demigod/messages/{id}'(id=${message.id})}">
+												[[*{email}]]
+											</a>
+										</div>
+										
+										<div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+											[[*{body}]]
+										</div>
+										
+										<div class="col-auto">
+											[[*{createdAt}]]
+										</div>
+										
+									
+								</div>
+							</li> 
+							
+						</ul>
+				       
+				    </div>
+				    
+				</div>
+				
+			</div>
+			
+		</main>
+		
+	</div>
+
+</body>
+</html>

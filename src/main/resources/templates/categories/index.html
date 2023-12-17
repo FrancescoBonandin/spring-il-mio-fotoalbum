@@ -16,44 +16,49 @@
 						
 			<div class="container">
 					
-					<th:block th:replace="frags::button('/demigod/categories/create', 'create new category')">
+			
+				<div class="row justify-content-center">
+
+					<div class="" th:insert="frags::button('/demigod/categories/create', 'create new category')">
 						
-					</th:block>
-				
-				<div class="row">
+					</div>
 					
-					<h3 th:if="${categories.size()==0}">
-						Non esiste nessuna categoria
-					</h3>
-					
-					<ul>
-					
-					    <li class="row" th:each="category : ${categories}" th:object="${category}" >
-							
-							<div class="col-auto">
-								[[*{name}]]
-							</div>
-							
-				       		<div class="col-auto">
-								[[*{description}]]
-							</div>
-							
-					       	<div class="col-auto">
-								<div class="row">
-									
-									<div class="col-auto" th:insert="frags::button('/demigod/categories/edit/'+*{id}, 'edit')"></div>
-									
-									<form class="col-auto" method="POST" th:action="@{/demigod/categories/delete/{id}  (id=*{id})}">
-							
-										<input class="btn btn-danger" type="submit" value="delete">
-										
-									</form>
-									
+					<div class="col my-5">
+						
+						<h3 th:if="${categories.size()==0}">
+							Non esiste nessuna categoria
+						</h3>
+						
+						<ul>
+						
+						    <li class="row my-2 justify-content-center" th:each="category : ${categories}" th:object="${category}" >
+								
+								<div class="col-2">
+									[[*{name}]]
 								</div>
-							</div>
-					    </li>
+								
+					       		<div class="col-6">
+									[[*{description}]]
+								</div>
+								
+						       	<div class="col-auto">
+									<div class="row">
+										
+										<div class="col-auto" th:insert="frags::button('/demigod/categories/edit/'+*{id}, 'edit')"></div>
+										
+										<form class="col-auto" method="POST" th:action="@{/demigod/categories/delete/{id}  (id=*{id})}">
+								
+											<input class="btn btn-danger" type="submit" value="delete">
+											
+										</form>
+										
+									</div>
+								</div>
+						    </li>
+							
+						</ul>
 						
-					</ul>
+					</div>
 				    
 				</div>
 				

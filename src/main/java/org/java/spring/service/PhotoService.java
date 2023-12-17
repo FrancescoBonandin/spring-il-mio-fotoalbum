@@ -38,9 +38,9 @@ public class PhotoService {
 		return photoRepo.findByTitleContainingAndUserIdOrDescriptionContainingAndUserId(q,id,q,id);
 	}
 	
-	public List<Photo> filterByCategories(Long id, Category...categories){
+	public List<Photo> filterByCategories(Long id, List<Category> categories){
 			
-		return photoRepo.findByUserIdAndCategoriesContaining(id, categories);
+		return photoRepo.findByUserIdAndCategoriesIn(id, categories);
 	}
 	
 	public	List<Photo> findAllByUserId(Long id) {
@@ -48,9 +48,9 @@ public class PhotoService {
 		return photoRepo.findAllByUserId(id);
 	}
 	
-	public List<Photo> filterAndFind(String q, Long id, Category...categories){
+	public List<Photo> filterAndFind(String q, Long id, List<Category> categories){
 		
-		return photoRepo.findByTitleContainingAndUserIdOrDescriptionContainingAndUserIdAndCategoriesContaining(q,id,q,id, categories);
+		return photoRepo.filterPhotos(q,id, categories);
 	}
 	
 	@Transactional
