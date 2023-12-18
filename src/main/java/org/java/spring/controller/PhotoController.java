@@ -20,11 +20,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
-
+@RequestMapping("/demigod/")
 @Controller
 public class PhotoController {
 	
@@ -94,17 +95,24 @@ public class PhotoController {
 
 	
 	@GetMapping("/photos/{id}")
+	
+
 	public String routeShow(Model model, @PathVariable Long id) {
-		
+		User user = getAuthUser();
 		Photo photo = photoServ.findById(id);
-		
-		model.addAttribute("photo",photo);
-		
-		return "photos/show";
+		if(user.equals(photo.getUser())) {
+			
+			model.addAttribute("photo",photo);
+			
+			return "photos/show";
+		}
+		else {
+			return "error 403, forbidden access";
+		}
 		
 	}
 	
-	@GetMapping("/demigod/photos/create")
+	@GetMapping("/photos/create")
 	
 	public String routeCreate(Model model) {
 		
@@ -118,7 +126,7 @@ public class PhotoController {
 		return "photos/form";
 	}
 	
-	@PostMapping("/demigod/photos/create")
+	@PostMapping("/photos/create")
 	public String storePhoto(
 			Model model,
 			@Valid @ModelAttribute Photo photo, 
@@ -133,10 +141,14 @@ public class PhotoController {
 			return savePhoto(model,photo,bindingResult);
 		}
 	
-	@GetMapping("/demigod/photos/edit/{id}")
+	@GetMapping("/photos/edit/{id}")
 	public String routeEdit(Model model, @PathVariable Long id) {
 		
+		User user = getAuthUser();
 		Photo photo = photoServ.findById(id);
+		
+		if(user.equals(photo.getUser())) {
+		
 		List <Category> categories=categoryServ.findAll();
 		
 		model.addAttribute("photo",photo);
@@ -144,9 +156,13 @@ public class PhotoController {
 		model.addAttribute("title", "Edit");
 		
 		return "photos/form";
+		}
+		else {
+			return "error 403, forbidden access";
+		}
 	}
 	
-	@PostMapping("/demigod/photos/edit/{id}")
+	@PostMapping("/photos/edit/{id}")
 	public String updatePhoto(
 			Model model,
 			@Valid @ModelAttribute Photo photo,
@@ -163,21 +179,28 @@ public class PhotoController {
 			}
 			
 			else {
-				return "photos/form";
+				return "error 403, forbidden access";
 			}
 		}
 	
-	@PostMapping("/demigod/photos/delete/{id}")
+	@PostMapping("/photos/delete/{id}")
 	public String routeDelete( RedirectAttributes redirectAttribute,  @PathVariable Long id) {
 		
+		User user = getAuthUser();
 		Photo photo = photoServ.findById(id);
+		
+		if(user.equals(photo.getUser())) {
 		
 		photoServ.delete(photo);
 		
 		redirectAttribute.addFlashAttribute("deletedPhoto", photo);
 		
 		
-		return "redirect:/";
+		return "redirect:/demigod/";
+		}
+		else {
+			return "error 403, forbidden access";
+		}
 	}
 	
 	
@@ -204,7 +227,7 @@ public class PhotoController {
 			return "photos/form";
 		}
 		
-		return "redirect:/";
+		return "redirect:/demigod/";
 		
 	}
 	

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, Long>{
 	
-	public abstract List<Photo>findAllByUserId(Long id);
+	public abstract List<Photo> findAllByVisibleIsTrue();
+	
+	public abstract List<Photo> findAllByUserId(Long id);
 	
 	public abstract List<Photo> findByTitleContainingOrDescriptionContaining(String title, String description) ;
 	

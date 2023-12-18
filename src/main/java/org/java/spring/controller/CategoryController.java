@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 
+@RequestMapping("/demigod/")
 @Controller
 public class CategoryController {
 	
@@ -37,7 +39,7 @@ public class CategoryController {
 		
 	}
 	
-	@GetMapping("/demigod/categories/create")
+	@GetMapping("/categories/create")
 	
 	public String routeCreate(Model model) {
 		
@@ -49,7 +51,7 @@ public class CategoryController {
 		return "categories/form";
 	}
 	
-	@PostMapping("/demigod/categories/create")
+	@PostMapping("/categories/create")
 	public String storeCategory(
 			Model model,
 			@Valid @ModelAttribute Category category, 
@@ -61,7 +63,7 @@ public class CategoryController {
 	}
 	
 	
-	@GetMapping("/demigod/categories/edit/{id}")
+	@GetMapping("/categories/edit/{id}")
 	public String routeEdit(Model model, @PathVariable Long id) {
 		
 		Category category = categoryServ.findById(id);
@@ -72,7 +74,7 @@ public class CategoryController {
 		return "categories/form";
 	}
 	
-	@PostMapping("/demigod/categories/edit/{id}")
+	@PostMapping("/categories/edit/{id}")
 	public String updateCategory(
 			Model model,
 			@Valid @ModelAttribute Category category,
@@ -83,7 +85,7 @@ public class CategoryController {
 			
 		}
 	
-	@PostMapping("/demigod/categories/delete/{id}")
+	@PostMapping("/categories/delete/{id}")
 	public String routeDelete( RedirectAttributes redirectAttribute,  @PathVariable Long id) {
 		
 		Category category = categoryServ.findById(id);

@@ -23,6 +23,10 @@ public class PhotoService {
 		return photoRepo.findAll();
 	}
 	
+	public List<Photo> findAllVisible(){
+		return photoRepo.findAllByVisibleIsTrue();
+	}
+	
 	public Photo findById(Long id) {
 		
 		return photoRepo.findById(id).get();

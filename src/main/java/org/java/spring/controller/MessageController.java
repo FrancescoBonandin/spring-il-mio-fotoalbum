@@ -10,8 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+@RequestMapping("/demigod/")
 @Controller
 public class MessageController {
 	
@@ -19,7 +20,7 @@ public class MessageController {
 	private MessageService messageServ;
 
 	
-	@GetMapping("/demigod/messages")
+	@GetMapping("/messages")
 	
 	public String routeIndex(Model model) {
 		
@@ -33,7 +34,7 @@ public class MessageController {
 		
 	}
 	
-	@GetMapping("/demigod/messages/{id}")
+	@GetMapping("/messages/{id}")
 		
 		public String routeShow(Model model,@PathVariable Long id) {
 			
@@ -48,7 +49,7 @@ public class MessageController {
 		}
 		
 	
-	@PostMapping("/demigod/messages/delete/{id}")
+	@PostMapping("/messages/delete/{id}")
 	public String routeDelete( RedirectAttributes redirectAttribute,  @PathVariable Long id) {
 		
 		Message message = messageServ.findById(id);

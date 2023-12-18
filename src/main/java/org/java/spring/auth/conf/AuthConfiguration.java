@@ -25,8 +25,11 @@ public class AuthConfiguration {
 			http.cors().disable()
 				.csrf().disable()
 				.authorizeHttpRequests()
-		        .requestMatchers("/**").hasAuthority("DEMIGOD")
+		        .requestMatchers("/demigod/**").hasAuthority("DEMIGOD")
+		        .requestMatchers("/webjars/**", "/css/**", "/js/**").permitAll()
+		        .requestMatchers("/api/**").permitAll()
 		        .and().formLogin()
+		        .defaultSuccessUrl("/demigod/", true)
 		        .and().logout()
 		        
 		    ;
@@ -56,36 +59,37 @@ public class AuthConfiguration {
 	    	return authProvider;
 	    }
 	   
-//	    @Bean
-//	    FilterRegistrationBean<CorsFilter> getCorsSettings() {
-//			
-//	        final CorsConfiguration config = new CorsConfiguration();
-//	        
-//	        // OPTIONS
-////	        config.setAllowCredentials(true);
-//	        
-//	        config.addAllowedOrigin("http://localhost:5173","http://localhost:8080" ); // DEVELOP FE SERVER
-//	        
-//	        // HEADERS
-//	        config.addAllowedHeader("Content-Type");
-//	        config.addAllowedHeader("Authorization");
-//	        config.addAllowedHeader("X-XSRF-TOKEN");
-//	        config.addAllowedHeader("Accept");
-//	        
-//	        // METHODS
-//	        config.addAllowedMethod(HttpMethod.GET);
-//	        config.addAllowedMethod(HttpMethod.POST);
-//			config.addAllowedMethod(HttpMethod.PUT);
-//	        config.addAllowedMethod(HttpMethod.DELETE);
-//	        
-//	        // SET CONFIG ON PATHS
-//	        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//	        source.registerCorsConfiguration("/**", config);
-//	        
-//	        final FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
-//	        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//	        
-//	        return bean;
-//	    }
+	    @Bean
+	    FilterRegistrationBean<CorsFilter> getCorsSettings() {
+			
+	        final CorsConfiguration config = new CorsConfiguration();
+	        
+	        // OPTIONS
+	        config.setAllowCredentials(true);
+	        
+	        config.addAllowedOrigin("http://localhost:5173"); // DEVELOP FE SERVER
+	        config.addAllowedOrigin("http://localhost:8080");
+	        
+	        // HEADERS
+	        config.addAllowedHeader("Content-Type");
+	        config.addAllowedHeader("Authorization");
+	        config.addAllowedHeader("X-XSRF-TOKEN");
+	        config.addAllowedHeader("Accept");
+	        
+	        // METHODS
+	        config.addAllowedMethod(HttpMethod.GET);
+	        config.addAllowedMethod(HttpMethod.POST);
+			config.addAllowedMethod(HttpMethod.PUT);
+	        config.addAllowedMethod(HttpMethod.DELETE);
+	        
+	        // SET CONFIG ON PATHS
+	        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	        source.registerCorsConfiguration("/**", config);
+	        
+	        final FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
+	        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+	        
+	        return bean;
+	    }
 
 }

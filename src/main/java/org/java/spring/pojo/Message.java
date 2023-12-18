@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.Length;
 import org.java.spring.db.auth.pojo.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,6 +49,7 @@ public class Message {
 	
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)
+	@JsonIgnore
 	private User user;
 	
 	public Message() {}
