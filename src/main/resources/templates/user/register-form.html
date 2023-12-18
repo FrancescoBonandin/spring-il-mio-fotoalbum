@@ -1,0 +1,82 @@
+<!--Later maybe
+
+<!DOCTYPE html>
+<html>
+<head th:replace="frags :: head('registration')" >
+	
+</head>
+<body >
+	
+	<th:block th:replace="frags :: header()"></th:block>
+	
+	
+	<div class="container">
+		
+		<div class="row justify-content-center">
+			
+			<div class="card col-6 text-center">
+				
+				<h3 class="card-title" > 
+					
+					Register
+				
+				</h3> 
+				
+				
+				<div ass="card-body row justify-content-center">
+					
+					<form class="col" th:object="${photo}"
+						  method="POST" >
+						
+						<div>
+							
+							<label for="username">
+								Username
+							</label>
+							
+							<input class="mb-2 form-control" type="text" id="username" name="username" placeholder="username" th:field="*{username}">
+							
+							<th:block th:replace="frags::errorDiv('username')"></th:block>	<input>
+							
+						</div>
+						
+						<div>
+							
+							<label for="password">
+								password
+							</label>
+							
+							<input class="mb-2 form-control" type="password" id="password" name="password" placeholder="password" >
+							
+							<th:block th:replace="frags::errorDiv('password')"></th:block>	<input>
+							
+						</div>
+							
+						
+						
+						<div class=" mb-4 row justify-content-evenly">
+							
+							<input class="btn btn-success col-auto" type="submit" th:value="${title}">
+							
+							<input class="btn btn-warning col-auto" type="reset">
+							
+						</div>
+					
+					</form>
+					
+				</div>
+				
+			</div>
+			
+			<div class="text-center my-4" th:insert="frags :: button('/login' , 'login')" ></div>
+			
+		</div>
+		
+		
+		
+	</div>
+
+</body>
+
+</html>
+-->

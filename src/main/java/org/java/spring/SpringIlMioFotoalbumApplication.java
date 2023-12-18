@@ -42,18 +42,25 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		Role roleDemigod = new Role("DEMIGOD");
+		Role roleSuperAdmin = new Role("SUPERADMIN");
+		Role roleAdmin = new Role("ADMIN");
 		
 		roleServ.save(roleDemigod);
+		roleServ.save(roleSuperAdmin);
+		roleServ.save(roleAdmin);
 
 		String pws = AuthConfiguration.passwordEncoder().encode("password");
 		
-		User owner1 = new User("mimmo", pws, roleDemigod);
+		User user1 = new User("mimmo", pws, roleDemigod);
 		
-		User owner2 = new User("pippo", pws, roleDemigod);
+		User user2 = new User("pippo", pws, roleSuperAdmin);
 		
-		userServ.save(owner1);
-		userServ.save(owner2);
+		User user3 = new User("franco", pws, roleAdmin);
 		
+		
+		userServ.save(user1);
+		userServ.save(user2);
+		userServ.save(user3);
 		Category category1=new Category("bella", "foto belle");
 		Category category2=new Category("bella2", "foto belle2");
 		
@@ -61,19 +68,17 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		categoryServ.save(category2);
 		
 		
-		for(long num=1;num<=14;num++) {
+		for(long num=1;num<=24;num++) {
 			
-		
-			
-			if(num>12) {
-				photoServ.save(new Photo("foto "+num, "desc "+num, userServ.findById(2) ,"https://picsum.photos/300?random="+num));
-			}
-
-			else {
-				photoServ.save(new Photo("foto "+num, "desc "+num, userServ.findById(1) ,"https://picsum.photos/300?random="+num));
-			}
-			if(num<10) {
+				if(num<=12) {
+					
+					photoServ.save(new Photo("foto "+num, "desc "+num, userServ.findById(1) ,"https://picsum.photos/300?random="+num));
+				}
 				
+				else {
+					photoServ.save(new Photo("foto "+num, "desc "+num, userServ.findById(3) ,"https://picsum.photos/300?random="+num));
+				}
+		
 				Photo photo=photoServ.findById(num);
 				
 				Category c = num%2==0?category1:category2;
@@ -82,14 +87,13 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 				
 				photoServ.save(photo);
 				
-			}
 			
 		}
 		Message msg1= new Message("email@email.email"
 								, "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 								+ " Aenean at purus orci. Duis porttitor felis vitae"
 								+ " congue suscipit. Sed vitae."
-								, owner1);
+								, user1);
 		
 		messageServ.save(msg1);
 				

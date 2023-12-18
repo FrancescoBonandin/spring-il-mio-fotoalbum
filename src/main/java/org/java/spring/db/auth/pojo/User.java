@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,8 +33,7 @@ public class User implements UserDetails {
 	
 	
 	@NotNull
-	@Column(nullable = false)
-	
+	@Column(nullable = false, unique = true)
 	private String username;
 	
 	@NotNull

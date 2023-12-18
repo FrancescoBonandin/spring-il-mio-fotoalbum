@@ -25,11 +25,14 @@ public class AuthConfiguration {
 			http.cors().disable()
 				.csrf().disable()
 				.authorizeHttpRequests()
+				.requestMatchers("/").hasAnyAuthority("ADMIN","SUPERADMIN","DEMIGOD")
+				.requestMatchers("/demigod/photos/**").hasAnyAuthority("ADMIN","DEMIGOD")
+				.requestMatchers("/superadmin/**").hasAuthority("SUPERADMIN")
 		        .requestMatchers("/demigod/**").hasAuthority("DEMIGOD")
 		        .requestMatchers("/webjars/**", "/css/**", "/js/**").permitAll()
 		        .requestMatchers("/api/**").permitAll()
 		        .and().formLogin()
-		        .defaultSuccessUrl("/demigod/", true)
+		        .defaultSuccessUrl("/", true)
 		        .and().logout()
 		        
 		    ;

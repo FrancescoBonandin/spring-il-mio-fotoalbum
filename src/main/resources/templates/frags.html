@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 	<body>
 		
-		<div th:fragment="head(title)">
+		<head th:fragment="head(title)">
 				
 				<meta charset="UTF-8">
     			<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,7 @@
     			<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
 				<title>[[${title}]]</title>
 				<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
-		</div>
+		</head>
 		
 		<header class="mb-4" th:fragment="header()">
 					
@@ -27,9 +27,9 @@
 					<div class="col-6 border">
 						
 						<div class="row h-100 justify-content-start align-items-center">
-							<div class="col-auto" th:insert="frags::button('/demigod/', 'photos')"></div>
-							<div class="col-auto" th:insert="frags::button('/demigod/categories', 'categories')"></div>
-							<div class="col-auto" th:insert="frags::button('/demigod/messages', 'messages')"></div>
+							<div sec:authorize="hasAnyAuthority('DEMIGOD', 'ADMIN')" class="col-auto" th:insert="frags::button('/', 'photos')"></div>
+							<div sec:authorize="hasAuthority('DEMIGOD')" class="col-auto" th:insert="frags::button('/demigod/categories', 'categories')"></div>
+							<div sec:authorize="hasAuthority('DEMIGOD')" class="col-auto" th:insert="frags::button('/demigod/messages', 'messages')"></div>
 						</div>
 				
 					</div>

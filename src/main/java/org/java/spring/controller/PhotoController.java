@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.java.spring.auth.db.service.RoleService;
 import org.java.spring.auth.db.service.UserService;
+import org.java.spring.db.auth.pojo.Role;
 import org.java.spring.db.auth.pojo.User;
 import org.java.spring.pojo.Category;
 import org.java.spring.pojo.Photo;
@@ -25,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
-@RequestMapping("/demigod/")
+
 @Controller
 public class PhotoController {
 	
@@ -37,6 +39,9 @@ public class PhotoController {
 	
 	@Autowired
 	private UserService userServ;
+	
+	@Autowired
+	private RoleService roleServ;
 	
 //	@GetMapping
 //	
@@ -80,8 +85,24 @@ public class PhotoController {
 		List<Photo> photos = q == null && checked==null
 							? photoServ.findAllByUserId(user.getId())
 							: (checked == null? photoServ.findByUserIdAndTitleOrDescription(q, user.getId())
-								:(q == null? photoServ.filterByCategories(user.getId(), checkedCat)
+							:(q == null? photoServ.filterByCategories(user.getId(), checkedCat)
 										: photoServ.filterAndFind(q, user.getId(), checkedCat)));
+		
+		model.addAttribute("photos", photos);
+		model.addAttribute("categories", allCategories);
+		model.addAttribute("q", q == null ? "" : q);
+		model.addAttribute("checked", checked == null ? new ArrayList<Category>():checkedCat);
+		
+		Role superAdmin=roleServ.findById(2);
+		
+		if(user.getRoles().contains(superAdmin)) {
+			
+			photos=photoServ.findAll();
+			
+			model.addAttribute("photos", photos);
+			
+			return "photos/superIndex";
+		}
 		
 		model.addAttribute("photos", photos);
 		model.addAttribute("categories", allCategories);
@@ -92,9 +113,11 @@ public class PhotoController {
 		
 	}
 	
+	
+	
 
 	
-	@GetMapping("/photos/{id}")
+	@GetMapping("/demigod/photos/{id}")
 	
 
 	public String routeShow(Model model, @PathVariable Long id) {
@@ -112,7 +135,7 @@ public class PhotoController {
 		
 	}
 	
-	@GetMapping("/photos/create")
+	@GetMapping("/demigod/photos/create")
 	
 	public String routeCreate(Model model) {
 		
@@ -126,7 +149,7 @@ public class PhotoController {
 		return "photos/form";
 	}
 	
-	@PostMapping("/photos/create")
+	@PostMapping("/demigod/photos/create")
 	public String storePhoto(
 			Model model,
 			@Valid @ModelAttribute Photo photo, 
@@ -141,7 +164,7 @@ public class PhotoController {
 			return savePhoto(model,photo,bindingResult);
 		}
 	
-	@GetMapping("/photos/edit/{id}")
+	@GetMapping("/demigod/photos/edit/{id}")
 	public String routeEdit(Model model, @PathVariable Long id) {
 		
 		User user = getAuthUser();
@@ -162,7 +185,7 @@ public class PhotoController {
 		}
 	}
 	
-	@PostMapping("/photos/edit/{id}")
+	@PostMapping("/demigod/photos/edit/{id}")
 	public String updatePhoto(
 			Model model,
 			@Valid @ModelAttribute Photo photo,
@@ -183,7 +206,7 @@ public class PhotoController {
 			}
 		}
 	
-	@PostMapping("/photos/delete/{id}")
+	@PostMapping("/demigod/photos/delete/{id}")
 	public String routeDelete( RedirectAttributes redirectAttribute,  @PathVariable Long id) {
 		
 		User user = getAuthUser();
@@ -196,11 +219,25 @@ public class PhotoController {
 		redirectAttribute.addFlashAttribute("deletedPhoto", photo);
 		
 		
-		return "redirect:/demigod/";
+		return "redirect:/";
 		}
 		else {
 			return "error 403, forbidden access";
 		}
+	}
+	
+	@PostMapping("/superadmin/photos/toggleVisible/{id}")
+	public String routeToggleVisibility(@PathVariable Long id) {
+		
+		Photo photo = photoServ.findById(id);
+		
+		
+		photo.setVisible(!photo.isVisible());
+		
+		photoServ.save(photo);
+		
+		return"redirect:/";
+		
 	}
 	
 	
@@ -227,7 +264,7 @@ public class PhotoController {
 			return "photos/form";
 		}
 		
-		return "redirect:/demigod/";
+		return "redirect:/";
 		
 	}
 	
@@ -239,3 +276,4 @@ public class PhotoController {
 	
 
 }
+
