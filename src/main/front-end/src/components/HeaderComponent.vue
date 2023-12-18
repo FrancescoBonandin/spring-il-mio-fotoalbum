@@ -10,6 +10,12 @@
 
                 Il mio FotoAlbum
             </h1>
+
+            <div class="col-auto">
+                <a class="btn btn-primary" href="http://localhost:8080/login">
+                    login
+                </a>
+            </div>
         </div>
       
     </header>

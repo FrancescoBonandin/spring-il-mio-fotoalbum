@@ -33,7 +33,7 @@ public class AuthConfiguration {
 		        .requestMatchers("/api/**").permitAll()
 		        .and().formLogin()
 		        .defaultSuccessUrl("/", true)
-		        .and().logout()
+		        .and().logout().logoutSuccessUrl("http://localhost:5173/")
 		        
 		    ;
 			
