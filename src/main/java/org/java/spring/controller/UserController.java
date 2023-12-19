@@ -2,6 +2,7 @@ package org.java.spring.controller;
 
 import java.util.List;
 
+import org.java.spring.auth.conf.AuthConfiguration;
 import org.java.spring.auth.db.service.RoleService;
 import org.java.spring.auth.db.service.UserService;
 import org.java.spring.db.auth.pojo.Role;
@@ -27,13 +28,13 @@ public class UserController {
 	@Autowired 
 	private RoleService roleServ;
 	
-@GetMapping("/register")
+	@GetMapping("/register")
 	
 	public String routeCreate(Model model) {
 		
-		Photo photo = new Photo();
+		User user = new User();
 		
-		model.addAttribute("photo",photo);
+		model.addAttribute("user",user);
 
 		
 		return "user/register-form";
@@ -47,7 +48,7 @@ public class UserController {
 			
 			Role admin= roleServ.findById(3);
 		
-			
+			user.setPassword(AuthConfiguration.passwordEncoder().encode(user.getPassword()));
 			user.setRoles(admin);
 
 			model.addAttribute("user", user);
