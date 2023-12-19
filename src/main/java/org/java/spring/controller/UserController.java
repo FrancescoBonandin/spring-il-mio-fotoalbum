@@ -1,14 +1,11 @@
 package org.java.spring.controller;
 
-import java.util.List;
 
 import org.java.spring.auth.conf.AuthConfiguration;
 import org.java.spring.auth.db.service.RoleService;
 import org.java.spring.auth.db.service.UserService;
 import org.java.spring.db.auth.pojo.Role;
 import org.java.spring.db.auth.pojo.User;
-import org.java.spring.pojo.Category;
-import org.java.spring.pojo.Photo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,7 +50,7 @@ public class UserController {
 
 			model.addAttribute("user", user);
 		
-			System.out.println("Photo:\n" + user);
+			System.out.println("user:\n" + user);
 			System.out.println("\n---------------\n");
 			System.out.println("Error:\n" + bindingResult);
 			

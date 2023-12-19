@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.Length;
 import org.java.spring.pojo.Message;
 import org.java.spring.pojo.Photo;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,11 +35,11 @@ public class User implements UserDetails {
 	
 	@NotNull
 	@Column(nullable = false, unique = true)
+	@Length(min=4)
 	private String username;
 	
 	@NotNull
 	@Column(nullable = false)
-	
 	private String password;
 	
 	@OneToMany(mappedBy = "user")

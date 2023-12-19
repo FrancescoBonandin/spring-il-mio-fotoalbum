@@ -13,11 +13,11 @@
 
             <div class="col-auto">
 
-                <a class="btn btn-primary" href="http://localhost:8080/register/">
+                <a class="btn btn-primary" href="http://localhost:8080/register">
                     register
                 </a>
 
-                <a class="btn btn-primary" href="http://localhost:8080/login/">
+                <a class="btn btn-primary" href="http://localhost:8080/login">
                     login
                 </a>
             </div>
